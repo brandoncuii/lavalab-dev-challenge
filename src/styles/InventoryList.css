@@ -1,0 +1,33 @@
+.inventory-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .stock-display.low {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 8px;
+  }
+  
+  .stock-display.low .current-stock {
+    color: #856404;
+    font-weight: bold;
+  }
+  
+  .add-new-btn {
+    background-color: #6c5ce7;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .tab.active {
+    background-color: #ddd;
+    border-radius: 4px 4px 0 0;
+  }

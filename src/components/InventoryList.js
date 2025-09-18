@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import { inventoryItems } from '../data/mockData';
 
 function InventoryList() {
-  const [items, setItems] = useState(inventoryItems);
+  const [items, setItems] = useState(inventoryItems); // State to manage inventory items
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const updateStock = (id, change) => {
+  const filteredItems = items.filter(item =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+
+
+  const updateStock = (id, change) => { // Change based on button click
     setItems(prevItems =>
       prevItems.map(item =>
         item.id === id
@@ -18,7 +25,7 @@ function InventoryList() {
     );
   };
 
-  const getTShirtIcon = (color) => {
+  const getTShirtIcon = (color) => { // Icon based on color
     const icons = {
       red: '👕',
       black: '🖤',
@@ -27,7 +34,7 @@ function InventoryList() {
     return icons[color] || '👕';
   };
 
-  return (
+  return ( // Main Component
     <div className="inventory-container">
       <div className="inventory-header">
         <h3>Materials / Blanks</h3>
@@ -41,11 +48,16 @@ function InventoryList() {
       </div>
 
       <div className="search-bar">
-        <input type="text" placeholder="Search Materials" />
+      <input 
+        type="text" 
+        placeholder="Search Materials" 
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
 
       <div className="inventory-list">
-        {items.map(item => (
+        {filteredItems.map(item => (
           <div key={item.id} className="inventory-item">
             <div className="item-info">
               <span className="item-icon">{getTShirtIcon(item.color)}</span>
