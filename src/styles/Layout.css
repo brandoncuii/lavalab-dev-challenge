@@ -18,27 +18,44 @@
 
 .sidebar-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 30px;
 }
-  
-.sidebar.collapsed .sidebar-header h2 {
-    display: none;
-}
 
-.collapse-btn {
-    background: none;
-    border: 1px solid #ddd;
-    padding: 4px 8px;
-    border-radius: 4px;
+.logo-container {
+    display: flex;
+    align-items: center;
     cursor: pointer;
-    font-size: 14px;
+    user-select: none;
 }
 
-.logo h2 {
+.logo-image {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+.sidebar.collapsed .logo-image {
+    margin-right: 0;
+}
+
+.sidebar.collapsed .sidebar-header {
+    justify-content: center;
+}
+
+.sidebar.collapsed .logo-container {
+    justify-content: center;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: bold;
     color: #333;
-    margin-bottom: 30px;
+}
+
+.logo-container:hover {
+    opacity: 0.7;
 }
 
 .nav-item {
@@ -62,6 +79,8 @@
 }
 
 .nav-icon {
+    width: 20px;
+    height: 20px;
     margin-right: 12px;
     min-width: 20px;
 }
