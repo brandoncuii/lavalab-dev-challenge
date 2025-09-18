@@ -23,9 +23,10 @@ const loadFromLocalStorage = () => {
     }
 };
 
-function InventoryList() {
+function InventoryList({ category = "Blanks" }) {
     const [items, setItems] = useState(() => loadFromLocalStorage()); // State to manage inventory items
     const [searchTerm, setSearchTerm] = useState('');
+    const [activeCategory, setActiveCategory] = useState("Blanks");
 
     useEffect(() => {
         saveToLocalStorage(items);
@@ -34,6 +35,10 @@ function InventoryList() {
     const filteredItems = items.filter(item =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const categoryItems = filteredItems.filter(item => 
+        item.category === category
+     );
 
     const updateStock = (id, change) => { // Change based on button click
         setItems(prevItems =>
@@ -61,7 +66,7 @@ function InventoryList() {
     return ( // Main Component
         <div className="inventory-container">
         <div className="inventory-header">
-            <h3>Materials / Blanks</h3>
+            <h3>Materials / {category}</h3>
             <div className="header-controls">
             <div className="tabs">
                 <button className="tab active">Inventory</button>
@@ -81,7 +86,7 @@ function InventoryList() {
         </div>
 
         <div className="inventory-list">
-            {filteredItems.map(item => (
+            {categoryItems.map(item => (
             <div key={item.id} className="inventory-item">
                 <div className="item-info">
                     <img src={getTShirtIcon(item.color)} alt="t-shirt" className="item-icon" />
