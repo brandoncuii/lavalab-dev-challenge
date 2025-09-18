@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { inventoryItems } from '../data/mockData';
+import redTshirt from '../assets/red-tshirt.png';
+import blackTshirt from '../assets/black-tshirt.png';
+import whiteTshirt from '../assets/white-tshirt.png';
+import '../styles/InventoryList.css';
 
 function InventoryList() {
   const [items, setItems] = useState(inventoryItems); // State to manage inventory items
@@ -25,13 +29,13 @@ function InventoryList() {
     );
   };
 
-  const getTShirtIcon = (color) => { // Icon based on color
+  const getTShirtIcon = (color) => {
     const icons = {
-      red: '👕',
-      black: '🖤',
-      white: '⚪'
+      red: redTshirt,
+      black: blackTshirt,
+      white: whiteTshirt
     };
-    return icons[color] || '👕';
+    return icons[color] || redTshirt;
   };
 
   return ( // Main Component
@@ -60,8 +64,8 @@ function InventoryList() {
         {filteredItems.map(item => (
           <div key={item.id} className="inventory-item">
             <div className="item-info">
-              <span className="item-icon">{getTShirtIcon(item.color)}</span>
-              <span className="item-name">{item.name}</span>
+                <img src={getTShirtIcon(item.color)} alt="t-shirt" className="item-icon" />
+                <span className="item-name">{item.name}</span>
             </div>
             <div className="stock-controls">
               <button 
