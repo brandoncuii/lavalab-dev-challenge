@@ -1,3 +1,5 @@
+// mock data for inventory items and categories
+
 export const inventoryItems = [
     {
       id: 1,
