@@ -93,3 +93,32 @@
     flex: 1;
     padding: 20px;
 }
+
+/* reponsive design */
+@media (max-width: 768px) {
+    .layout {
+      flex-direction: column;
+    }
+    
+    .sidebar {
+      width: 100%;
+      height: auto;
+      padding: 10px;
+      border-right: none;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .nav-menu {
+      display: flex;
+      overflow-x: auto;
+    }
+    
+    .nav-item {
+      white-space: nowrap;
+      margin-right: 10px;
+    }
+    
+    .main-content {
+      padding: 10px;
+    }
+}
