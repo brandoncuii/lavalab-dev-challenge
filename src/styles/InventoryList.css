@@ -38,3 +38,28 @@
     margin-right: 12px;
     object-fit: contain;
   }
+
+  .quick-order-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .quick-order-btn:hover {
+    background-color: #218838;
+  }
+  
+  .shortage {
+    color: #dc3545;
+    font-weight: bold;
+    margin-right: 12px;
+  }
+  
+  .order-info {
+    display: flex;
+    align-items: center;
+  }
