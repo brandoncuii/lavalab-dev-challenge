@@ -27,6 +27,7 @@ function InventoryList({ category = "Blanks" }) {
     const [items, setItems] = useState(() => loadFromLocalStorage()); // State to manage inventory items
     const [searchTerm, setSearchTerm] = useState('');
     const [activeCategory, setActiveCategory] = useState("Blanks");
+    const [activeTab, setActiveTab] = useState('inventory');
 
     useEffect(() => {
         saveToLocalStorage(items);
@@ -39,6 +40,8 @@ function InventoryList({ category = "Blanks" }) {
     const categoryItems = filteredItems.filter(item => 
         item.category === category
      );
+
+    const orderQueueItems = categoryItems.filter(item => item.currentStock < item.targetStock);
 
     const updateStock = (id, change) => { // Change based on button click
         setItems(prevItems =>
@@ -69,8 +72,18 @@ function InventoryList({ category = "Blanks" }) {
             <h3>Materials / {category}</h3>
             <div className="header-controls">
             <div className="tabs">
-                <button className="tab active">Inventory</button>
-                <button className="tab">Order Queue</button>
+                <button 
+                    className={`tab ${activeTab === 'inventory' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('inventory')}
+                >
+                    Inventory
+                </button>
+                <button 
+                    className={`tab ${activeTab === 'queue' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('queue')}
+                >
+                    Order Queue ({orderQueueItems.length})
+                </button>
             </div>
             <button className="add-new-btn">+ Add New</button>
             </div>
@@ -86,32 +99,47 @@ function InventoryList({ category = "Blanks" }) {
         </div>
 
         <div className="inventory-list">
-            {categoryItems.map(item => (
-            <div key={item.id} className="inventory-item">
-                <div className="item-info">
-                    <img src={getTShirtIcon(item.color)} alt="t-shirt" className="item-icon" />
-                    <span className="item-name">{item.name}</span>
-                </div>
-                <div className="stock-controls">
-                <button 
-                    className="stock-btn decrease"
-                    onClick={() => updateStock(item.id, -1)}
-                >
-                    -
-                </button>
-                <div className={`stock-display ${item.status}`}>
-                    <div className="current-stock">{item.currentStock}</div>
-                    <div className="target-stock">{item.targetStock} {item.unit}</div>
-                </div>
-                <button 
-                    className="stock-btn increase"
-                    onClick={() => updateStock(item.id, 1)}
-                >
-                    +
-                </button>
-                </div>
-            </div>
-            ))}
+            {activeTab === 'inventory' ? (
+                categoryItems.map(item => (
+                    <div key={item.id} className="inventory-item">
+                    <div className="item-info">
+                        <img src={getTShirtIcon(item.color)} alt="t-shirt" className="item-icon" />
+                        <span className="item-name">{item.name}</span>
+                    </div>
+                    <div className="stock-controls">
+                        <button 
+                        className="stock-btn decrease"
+                        onClick={() => updateStock(item.id, -1)}
+                        >
+                        -
+                        </button>
+                        <div className={`stock-display ${item.status}`}>
+                        <div className="current-stock">{item.currentStock}</div>
+                        <div className="target-stock">{item.targetStock} {item.unit}</div>
+                        </div>
+                        <button 
+                        className="stock-btn increase"
+                        onClick={() => updateStock(item.id, 1)}
+                        >
+                        +
+                        </button>
+                    </div>
+                    </div>
+                ))
+                ) : (
+                orderQueueItems.map(item => (
+                    <div key={item.id} className="inventory-item order-item">
+                    <div className="item-info">
+                        <img src={getTShirtIcon(item.color)} alt="t-shirt" className="item-icon" />
+                        <span className="item-name">{item.name}</span>
+                    </div>
+                    <div className="order-info">
+                        <span className="shortage">Need {item.targetStock - item.currentStock} more</span>
+                        <button className="quick-order-btn">Quick Order</button>
+                    </div>
+                    </div>
+                ))
+            )}
         </div>
         </div>
     );
